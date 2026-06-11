@@ -20,8 +20,7 @@ app.listen(3000, () => {
 function update() {
   axios('https://pichici.onrender.com/pichici')
     .then(res => {
-      console.log(res)
-      fs.writeFileSync('./pichici.json', JSON.stringify(res))
+      fs.writeFileSync('./pichici.json', JSON.stringify(res.data))
     })
     .catch(err => console.log(err.code))
 }
