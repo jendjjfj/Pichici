@@ -8,11 +8,23 @@ let pichici = require('./pichici.json')
 app.get('/', (req, res) => routeIndex(req, res))
 app.get('/add', (req, res) => routeAdd(req, res))
 app.get('/remove', (req, res) => routeRemove(req, res))
+app.get('/pichici', (req, res) => res.send(pichici))
 
 
 app.listen(3000, () => {
+  update()
   console.log(`Server is running on port 3000...`)
 })
+
+
+function update() {
+  axios('https://pichici.onrender.com/pichici')
+    .then(res => {
+      console.log(res)
+      fs.writeFileSync('./pichici.json', JSON.stringify(res))
+    })
+    .catch(err => console.log(err.code))
+}
 
 
 function routeIndex(req, res) {
